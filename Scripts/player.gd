@@ -51,10 +51,27 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
+	
+	## HEADBOB
+	t_bob += delta * velocity.length() * float(is_on_floor())
+	camera.transform.origin = _headbob(t_bob)
 
 	move_and_slide()
+
+	if direction != Vector3.ZERO and is_on_floor():
+			#var timer_interval = 0.35 if is_sprinting else 0.55
+			#if $Sounds/Timer.time_left <= 0:
+			#$Sounds/Walk.pitch_scale = randf_range(1.3, 1.0)
+			#$Sounds/Walk.play_sfx()
+			#$Sounds/Timer.start(timer_interval)
+		camera.fov = lerp(camera.fov, SPRINT_FOV if is_sprinting else NORMAL_FOV, ZOOM_SPEED * delta)
+	_check_fall_off_map()
 
 ## FUNGSI CEK BILA JATUH DARI MAP
 func _check_fall_off_map():
 	if global_transform.origin.y < THRESHOLD:
 		get_tree().reload_current_scene()
+
+## FUNGSI HANDLE HEADBOB
+func _headbob(time) -> Vector3:
+	return Vector3(cos(time * BOB_FREQ / 2) * BOB_AMP, sin(time * BOB_FREQ) * BOB_AMP, 0.0)
