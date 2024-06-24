@@ -29,6 +29,10 @@ func _input(event):
 		neck.rotation_degrees.y += -event.relative.x * SENSITIVITY
 		camera.rotation_degrees.x += -event.relative.y * SENSITIVITY
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-45), deg_to_rad(60))
+	# Shift + R to restart
+	elif event.is_action_pressed("restart"):
+		get_tree().reload_current_scene()
+	# ESC to quit
 	elif event.is_action_pressed("quit"):
 		get_tree().quit()
 
