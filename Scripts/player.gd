@@ -22,6 +22,7 @@ var gravity = 20
 @onready var camera = $Neck/HeadXRotation/Camera
 @onready var head_x_rotation = $Neck/HeadXRotation
 @onready var flashlight = $Flashlight
+@onready var flashlight2 = $Flashlight/Sketchfab_Scene
 
 ## CAMERA MOVEMENT
 func _input(event):
@@ -36,11 +37,16 @@ func _input(event):
 	# ESC to quit
 	elif event.is_action_pressed("quit"):
 		get_tree().quit()
+
+##PROCESS FUNCTIONS
 func _process(delta):
 	make_flashlight_follow(delta)
+
+##HANDLE SMOOTH FLASHLIGHT FOLLOWING
 func make_flashlight_follow(delta):
 	flashlight.rotation.y = lerp(flashlight.rotation.y, neck.rotation.y, delta * FLASH_FOLLOW_SPEED)
 	flashlight.rotation.x = lerp(flashlight.rotation.x, camera.rotation.x, delta * FLASH_FOLLOW_SPEED)
+
 ## HANDLE MOVEMENT
 func _physics_process(delta):
 	# Add the gravity.
