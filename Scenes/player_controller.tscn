@@ -1,0 +1,66 @@
+[gd_scene load_steps=5 format=3 uid="uid://bh6y6tcmnwsuc"]
+
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_r15q4"]
+[ext_resource type="PackedScene" uid="uid://b808flluskal8" path="res://Scenes/flashlight.tscn" id="2_dkdde"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_vpwuv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0hq8l"]
+size = Vector3(0.550412, 1, 0.741211)
+
+[node name="Player" type="CharacterBody3D"]
+floor_max_angle = 1.309
+script = ExtResource("1_r15q4")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(320, 240)
+render_target_update_mode = 4
+
+[node name="Subviewport_Camera" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+unique_name_in_owner = true
+cull_mask = 524288
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_vpwuv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0101613, -0.26194, -0.129395)
+shape = SubResource("BoxShape3D_0hq8l")
+
+[node name="Neck" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.217814, 0)
+
+[node name="HeadXRotation" type="Node3D" parent="Neck"]
+
+[node name="Camera" type="Camera3D" parent="Neck/HeadXRotation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.293436, -0.303222)
+cull_mask = 524287
+
+[node name="Flashlight" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.217814, 0)
+
+[node name="Sketchfab_Scene" parent="Flashlight" instance=ExtResource("2_dkdde")]
+transform = Transform3D(-3.09086e-09, 3.09086e-09, 0.1, 0.0707107, 0.0707107, 0, -0.0707107, 0.0707107, -4.37114e-09, 0.561687, -0.86459, -1.12835)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Flashlight/Sketchfab_Scene"]
+transform = Transform3D(-0.532638, 7.07107, -7.05098, 0.532638, 7.07107, 7.05098, 9.97159, 0, -0.753264, 3.1452, 4.0676, 0.48844)
+light_color = Color(0.97312, 0.961806, 0.994394, 1)
+light_energy = 5.0
+light_volumetric_fog_energy = 16.0
+light_size = 0.5
+light_specular = 1.0
+light_cull_mask = 4294443009
+spot_range = 20.0
+spot_angle = 28.8965
+
+[node name="Sounds" type="Node3D" parent="."]

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b808flluskal8"]
+
+[ext_resource type="PackedScene" uid="uid://bssaq4twy1kt7" path="res://Assets/Flashlight/lowpoly_flashlight.glb" id="1_q7hqy"]
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_q7hqy")]
+transform = Transform3D(0.0707107, -0.0707107, 0, 0.0707107, 0.0707107, 0, 0, 0, 0.1, 0, 0, 0)
